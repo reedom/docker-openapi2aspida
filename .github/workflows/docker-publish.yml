@@ -2,11 +2,8 @@ name: Docker
 
 on:
   push:
-    branches: [ "main" ]
     # Publish semver tags as releases.
     tags: [ 'v*.*.*' ]
-  pull_request:
-    branches: [ "main" ]
 
 env:
   # Use docker.io for Docker Hub if empty
@@ -37,6 +34,9 @@ jobs:
 
       - name: Build the Docker image
         run: docker build . --tag $IMAGE_NAME:$(date +%s)
+
+      - name: Build the Docker image
+        run: docker build . --tag $IMAGE_NAME:${{ github.ref_name }}
 
       - name: Build the Docker image
         run: docker build . --tag $IMAGE_NAME:latest
